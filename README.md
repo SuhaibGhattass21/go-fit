@@ -1,6 +1,6 @@
 # go-fit
 A fully-structured sports clothing and supplies e-commerce platform
-# 🛒 Sportswear E-commerce Backend API
+# 🛒 Go-fit
 
 Node.js + TypeScript backend for an e-commerce platform that sells sportswear and equipment.
 
