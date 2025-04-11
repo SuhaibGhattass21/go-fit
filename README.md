@@ -8,7 +8,7 @@ Node.js + TypeScript backend for an e-commerce platform that sells sportswear an
 - Node.js
 - Express.js
 - TypeScript
-- PostgreSQL + Prisma ORM
+- mongodb + Prisma ORM
 - JWT Auth
 - Swagger for API docs
 - Dockerized
