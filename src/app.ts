@@ -1,5 +1,5 @@
 import express from 'express';
-import * as passport from 'passport';
+import passport from 'passport';
 import connectDB from './config/db';
 import authRoutes from './routes/auth.routes';
 import dotenv from 'dotenv';

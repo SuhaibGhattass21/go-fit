@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A fully-structured sports clothing and supplies e-commerce platform\r # 🛒 Go-fit",
   "main": "app.ts",
-  "type": "module",
   "scripts": {
     "dev": "nodemon src/app.ts",
     "start": "node dist/app.js",
