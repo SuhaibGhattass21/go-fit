@@ -2,7 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import connectDB from './config/db';
 import env from './config/env'
-import Routes from '../src/routes';
+import Routes from './routes/index';
 import './config/passport';
 
 const app = express();

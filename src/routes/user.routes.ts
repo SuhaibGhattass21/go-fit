@@ -1,6 +1,6 @@
 // src/routes/user_routes.ts
 import { Router } from "express";
-import * as passport from "passport";
+import passport from "passport";
 import { UserController } from "../controllers/user.controller";
 
 const router = Router();
