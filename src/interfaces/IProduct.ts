@@ -1,7 +1,8 @@
-import { Document } from "mongoose";
+import { Document,Types } from "mongoose";
 import { ProductCategory } from "../types/categories";
 
 export interface IProduct extends Document {
+    _id: Types.ObjectId;
     name: string;
     description: string;
     price: number;
@@ -11,3 +12,4 @@ export interface IProduct extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
+

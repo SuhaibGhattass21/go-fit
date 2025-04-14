@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import passport from 'passport';
+import * as passport from 'passport';
 import { register, login } from '../controllers/auth.controller';
 
 const router = express.Router();

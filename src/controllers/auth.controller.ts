@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { IUser, User } from '../models/user.model';
+import { User } from '../models/user.model';
+import { IUser } from '../interfaces/IUser';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response): Promise<any> => {

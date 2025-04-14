@@ -1,15 +1,44 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { IUser } from '../interfaces/IUser'; 
 import bcrypt from 'bcrypt';
 
-export interface IUser extends Document {
-    email: string;
-    password: string;
-    comparePassword(candidatePassword: string): Promise<boolean>;
-}
-
 const userSchema = new Schema<IUser>({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    firstName: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    phone: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    address: {
+        street: { type: String, required: false },
+        city: { type: String, required: false },
+        state: { type: String, required: false },
+        postalCode: { type: String, required: false },
+        country: { type: String, required: false },
+    },
+},
+{
+    timestamps: true,
 });
 
 userSchema.pre('save', async function (next) {
@@ -35,3 +64,4 @@ userSchema.set('toJSON', {
 });
 
 export const User = model<IUser>('User', userSchema);
+
