@@ -1,31 +1,30 @@
-// src/models/order_model.ts
 import { Schema, model } from "mongoose";
-import { OrderStatus } from "../types/orderStatus"; 
+import { OrderStatus } from "../types/orderStatus";
 import { IOrder } from "../interfaces/IOrder";
 
 const orderSchema = new Schema<IOrder>({
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User", 
+        ref: "User",
         required: true,
     },
     items: [
         {
-        product: {
-            type: Schema.Types.ObjectId,
-            ref: "Product", 
-            required: true,
-        },
-        quantity: {
-            type: Number,
-            required: true,
-            min: 1,
-        },
-        price: {
-            type: Number,
-            required: true,
-            min: 0,
-        },
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: "Product",
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1,
+            },
+            price: {
+                type: Number,
+                required: true,
+                min: 0,
+            },
         },
     ],
     totalAmount: {
@@ -47,9 +46,9 @@ const orderSchema = new Schema<IOrder>({
         country: { type: String, required: true },
     },
 },
-{
-    timestamps: true,
-}
+    {
+        timestamps: true,
+    }
 );
 
 export const Order = model<IOrder>("Order", orderSchema);

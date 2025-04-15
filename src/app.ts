@@ -6,6 +6,9 @@ import Routes from './routes/index';
 import './config/passport';
 import cors from 'cors';
 import { logger } from './utils/logger';
+import swaggerSpec from './config/swagger';
+import swaggerUI from 'swagger-ui-express';
+
 const app = express();
 
 app.use(
@@ -25,7 +28,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use('/api', Routes);
-
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 connectDB().catch(
     (err) => {
         const PORT = env.PORT || 3000;
