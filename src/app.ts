@@ -29,6 +29,9 @@ app.use(passport.initialize());
 
 app.use('/api', Routes);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
+app.use('/health', (_: any, res: any) => res.status(200).send('OK'));
+
 connectDB().then(
     (_) => {
         const PORT = env.PORT || 3000;

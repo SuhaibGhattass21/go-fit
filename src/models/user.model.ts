@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from '../interfaces/IUser'; 
+import { IUser } from '../interfaces/IUser';
 import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<IUser>({
@@ -36,10 +36,16 @@ const userSchema = new Schema<IUser>({
         postalCode: { type: String, required: false },
         country: { type: String, required: false },
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+        required: true,
+    },
 },
-{
-    timestamps: true,
-});
+    {
+        timestamps: true,
+    });
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();

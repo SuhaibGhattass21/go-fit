@@ -14,6 +14,7 @@ export interface IUser extends Document {
         postalCode: string;
         country: string;
     };
+    role: 'user' | 'admin';
     createdAt: Date;
     updatedAt: Date;
     comparePassword(candidatePassword: string): Promise<boolean>;

@@ -20,7 +20,7 @@ export class AuthService {
     }
 
     static generateToken(user: IUser): string {
-        return jwt.sign({ sub: user._id }, env.JWT_SECRET as string, {
+        return jwt.sign({ sub: user._id, role: user.role }, env.JWT_SECRET as string, {
             expiresIn: '4h',
         });
     }
