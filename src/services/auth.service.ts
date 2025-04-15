@@ -4,17 +4,17 @@ import jwt from 'jsonwebtoken';
 import env from '../config/env';
 
 export class AuthService {
-    static async register(email: string, password: string): Promise<IUser> {
-        if (!email || !password) {
+    static async register(userData: IUser): Promise<IUser> {
+        if (!userData.email || !userData.password) {
             throw new Error('Email and password are required');
         }
 
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email: userData.email });
         if (existingUser) {
             throw new Error('Email already in use');
         }
 
-        const user = new User({ email, password });
+        const user = new User(userData);
         await user.save();
         return user;
     }

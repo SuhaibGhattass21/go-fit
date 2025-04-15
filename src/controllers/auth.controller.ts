@@ -3,10 +3,9 @@ import { AuthService } from '../services/auth.service';
 import { IUser } from '../interfaces/IUser';
 
 export const register = async (req: Request, res: Response): Promise<any> => {
-    const { email, password } = req.body;
-
+    const userData: IUser = req.body;
     try {
-        const user = await AuthService.register(email, password);
+        const user = await AuthService.register(userData);
         res.status(201).json(user.toJSON());
     } catch (error) {
         const message = error instanceof Error ? error.message : 'Server error';

@@ -6,7 +6,7 @@ services:
     container_name: gofit-ecommerce_api
     restart: always
     ports:
-      - "4199:4199"
+      - "3000:3000"
     env_file:
       - .env
     # depends_on:

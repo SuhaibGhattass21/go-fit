@@ -29,6 +29,9 @@ app.use(passport.initialize());
 
 app.use('/api', Routes);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.get('/api-docs/', (req, res) => res.redirect('/api-docs'));
+app.get('/', (req, res) => res.redirect('/api-docs'));
+app.get('/api-docs.json', (_: any, res: any) => res.json(swaggerSpec));
 
 app.use('/health', (_: any, res: any) => res.status(200).send('OK'));
 

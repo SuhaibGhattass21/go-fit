@@ -1,7 +1,7 @@
-// src/routes/user_routes.ts
 import { Router } from "express";
 import passport from "passport";
 import { UserController } from "../controllers/user.controller";
+import { requireRole } from "../middlewares/role";
 
 const router = Router();
 
@@ -64,7 +64,7 @@ const router = Router();
  *       400:
  *         description: Bad request
  */
-router.get("/users", passport.authenticate("jwt", { session: false }), UserController.getUsers);
+router.get("/users", passport.authenticate("jwt", { session: false }), requireRole('admin'), UserController.getUsers);
 router.post("/users", UserController.createUser);
 
 /**
