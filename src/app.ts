@@ -29,8 +29,8 @@ app.use(passport.initialize());
 
 app.use('/api', Routes);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-connectDB().catch(
-    (err) => {
+connectDB().then(
+    (_) => {
         const PORT = env.PORT || 3000;
         app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
     }
