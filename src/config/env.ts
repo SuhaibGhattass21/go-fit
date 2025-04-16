@@ -15,7 +15,15 @@ const envSchema = z.object({
     CONNECTION_STRING: z.string({
         required_error: "CONNECTION_STRING is required",
     }),
-    SMS_KEY: z.string().optional()
+    SMS_KEY: z.string().optional(),
+    SMTP_HOST: z.string().optional(),
+    SMTP_PORT: z.coerce.number().optional(),
+    SMTP_USER: z.string().optional(),
+    SMTP_PASS: z.string().optional(),
+    SMTP_FROM: z.string().optional(),
+    TWILIO_ACCOUNT_SID: z.string().optional(),
+    TWILIO_AUTH_TOKEN: z.string().optional(),
+    TWILIO_WHATSAPP_FROM: z.string().optional(),
 });
 
 const env = envSchema.safeParse(process.env);
