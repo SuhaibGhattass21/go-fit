@@ -6,10 +6,10 @@ const router = Router();
 
 router.use(passport.authenticate('jwt', { session: false }));
 
-// router.post('/items/', CartController.addItemToCart);
-// router.get('/items/:id', CartController.getCart);
-// router.put('/items/:productId', CartController.updateItemQuantity);
-// router.delete('/items/:productId', CartController.removeItemFromCart);
-// router.delete('/items/:id', CartController.clearCart);
+router.post('/items/', (req: any, res, next) => CartController.addItemToCart(req, res, next));
+router.get('/items/:id', (req: any, res, next) => CartController.getCart(req, res, next));
+router.put('/items/:productId', (req: any, res, next) => CartController.updateItemQuantity(req, res, next));
+router.delete('/items/:productId', (req: any, res, next) => CartController.removeItemFromCart(req, res, next));
+router.delete('/items/:id', (req: any, res, next) => CartController.clearCart(req, res, next));
 
 export default router;
