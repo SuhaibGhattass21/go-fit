@@ -13,6 +13,5 @@ router.use("/", productRoutes);
 router.use("/", orderRoutes);
 router.use("/", cartRoutes);
 
-
 export default router;
 

@@ -1,9 +1,8 @@
-import { Product } from "../models/product.model"; 
+import { Product } from "../models/product.model";
 import { ProductCategory } from "../types/categories";
 import { IProduct } from "../interfaces/IProduct";
 
 export class ProductService {
-    // Creating Product
     static async createProduct(
         name: string,
         description: string,
@@ -28,7 +27,6 @@ export class ProductService {
         }
     }
 
-    // Update an existing product
     static async updateProduct(
         productId: string,
         updates: Partial<{
@@ -54,7 +52,6 @@ export class ProductService {
         }
     }
 
-    // Delete a product by its ID
     static async deleteProduct(productId: string): Promise<void> {
         try {
             const product = await Product.findByIdAndDelete(productId);
@@ -66,7 +63,6 @@ export class ProductService {
         }
     }
 
-    // Get a product by its ID
     static async getProductById(productId: string): Promise<IProduct | null> {
         try {
             const product = await Product.findById(productId);
@@ -74,12 +70,11 @@ export class ProductService {
                 throw new Error("Product not found");
             }
             return product;
-            } catch (error) {
-                throw new Error(`Error fetching product: ${(error as Error).message}`);
+        } catch (error) {
+            throw new Error(`Error fetching product: ${(error as Error).message}`);
         }
     }
 
-    // Displaying Products by Category
     static async getProductsByCategory(category?: ProductCategory) {
         try {
             if (category) {
@@ -91,7 +86,6 @@ export class ProductService {
         }
     }
 
-    // Displaying All Categories
     static getCategories(): string[] {
         return Object.values(ProductCategory);
     }

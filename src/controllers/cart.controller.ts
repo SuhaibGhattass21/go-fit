@@ -59,7 +59,6 @@ export class CartController {
         }
     }
 
-    // Remove an item from the cart
     static async removeItemFromCart(req: AuthRequest, res: Response, next: NextFunction): Promise<any> {
         try {
             const userId = req.user?._id.toString();
@@ -75,7 +74,6 @@ export class CartController {
         }
     }
 
-    // Clear the cart
     static async clearCart(req: AuthRequest, res: Response, next: NextFunction): Promise<any> {
         try {
             const userId = req.user?._id.toString();
