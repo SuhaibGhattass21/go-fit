@@ -20,27 +20,27 @@ export class OrderService {
         try {
             const orderItems: IOrderItem[] = [];
             let totalAmount = 0;
-        
+
             for (const item of items) {
                 const product = await Product.findById(item.productId);
                 if (!product) {
-                throw new Error(`Product not found: ${item.productId}`);
+                    throw new Error(`Product not found: ${item.productId}`);
                 }
                 if (product.stock < item.quantity) {
-                throw new Error(`Insufficient stock for product: ${product.name}`);
+                    throw new Error(`Insufficient stock for product: ${product.name}`);
                 }
-        
+
                 orderItems.push({
-                product: product._id,
-                quantity: item.quantity,
-                price: product.price,
+                    product: product._id,
+                    quantity: item.quantity,
+                    price: product.price,
                 });
-        
+
                 product.stock -= item.quantity;
                 await product.save();
                 totalAmount += product.price * item.quantity;
             }
-        
+
             const order = new Order({
                 user: userId,
                 items: orderItems,
@@ -49,7 +49,7 @@ export class OrderService {
                 shippingAddress,
             });
             await order.save();
-        
+
             await order.populate([{ path: "user" }, { path: "items.product" }]);
             return order;
         } catch (error: unknown) {
@@ -78,10 +78,10 @@ export class OrderService {
             if (!order) {
                 throw new Error("Order not found");
             }
-        
+
             Object.assign(order, updates);
             await order.save();
-        
+
             await order.populate([{ path: "user" }, { path: "items.product" }]);
             return order;
         } catch (error: unknown) {
@@ -98,7 +98,7 @@ export class OrderService {
             if (!order) {
                 throw new Error("Order not found");
             }
-        
+
             // Restore product stock before deleting the order
             for (const item of order.items) {
                 const product = await Product.findById(item.product);
@@ -142,10 +142,52 @@ export class OrderService {
             }
             return order;
         } catch (error: unknown) {
-        if (error instanceof Error) {
-            throw new Error(`Error fetching order: ${error.message}`);
+            if (error instanceof Error) {
+                throw new Error(`Error fetching order: ${error.message}`);
+            }
+            throw new Error("Error fetching order: An unknown error occurred");
         }
-        throw new Error("Error fetching order: An unknown error occurred");
+    }
+
+    static async getAllOrders(): Promise<IOrder[]> {
+        try {
+            const orders = await Order.find()
+                .populate("user")
+                .populate("items.product");
+            return orders;
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Error fetching all orders: ${error.message}`);
+            }
+            throw new Error("Error fetching all orders: An unknown error occurred");
+        }
+    }
+
+    static async cancelOrder(orderId: string | Types.ObjectId): Promise<IOrder | null> {
+        try {
+            const order = await Order.findById(orderId);
+            if (!order) {
+                throw new Error("Order not found");
+            }
+
+            order.status = OrderStatus.Cancelled;
+            await order.save();
+
+            for (const item of order.items) {
+                const product = await Product.findById(item.product);
+                if (product) {
+                    product.stock += item.quantity;
+                    await product.save();
+                }
+            }
+
+            await order.populate([{ path: "user" }, { path: "items.product" }]);
+            return order;
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Error cancelling order: ${error.message}`);
+            }
+            throw new Error("Error cancelling order: An unknown error occurred");
         }
     }
 }

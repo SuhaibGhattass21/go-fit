@@ -131,9 +131,9 @@ router.post("/users", UserController.createUser);
  *       404:
  *         description: User not found
  */
-router.get("/users/:id", passport.authenticate("jwt", { session: false }), UserController.getUser);
-router.put("/users/:id", passport.authenticate("jwt", { session: false }), UserController.updateUser);
-router.delete("/users/:id", passport.authenticate("jwt", { session: false }), UserController.deleteUser);
+router.get("/users/:id", requireRole('admin'), passport.authenticate("jwt", { session: false }), UserController.getUser);
+router.put("/users/:id", requireRole('user'), passport.authenticate("jwt", { session: false }), UserController.updateUser);
+router.delete("/users/:id", requireRole('admin'), passport.authenticate("jwt", { session: false }), UserController.deleteUser);
 
 export default router;
 

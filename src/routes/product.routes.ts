@@ -1,6 +1,7 @@
 // src/routes/product_routes.ts
 import { Router, RequestHandler } from "express";
 import { ProductController } from "../controllers/product.controller"; // Adjust the import path as necessary
+import { requireRole } from "src/middlewares/role";
 
 const router = Router();
 
@@ -59,7 +60,7 @@ const deleteProduct: RequestHandler = ProductController.deleteProduct;
  *         description: Bad request
  */
 router.get("/products", getProducts);
-router.post("/products", createProduct);
+router.post("/products", requireRole('admin'), createProduct);
 
 /**
  * @openapi
@@ -134,7 +135,7 @@ router.get("/categories", getCategories);
  *         description: Product not found
  */
 router.get("/products/:id", getProduct);
-router.put("/products/:id", updateProduct);
-router.delete("/products/:id", deleteProduct);
+router.put("/products/:id", requireRole('admin'), updateProduct);
+router.delete("/products/:id", requireRole('admin'), deleteProduct);
 
 export default router;

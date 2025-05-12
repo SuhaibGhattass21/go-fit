@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { CartController } from '../controllers/cart.controller';
+import { requireRole } from 'src/middlewares/role';
 const router = Router();
 
 router.use(passport.authenticate('jwt', { session: false }));
@@ -61,7 +62,7 @@ router.use(passport.authenticate('jwt', { session: false }));
  *       401:
  *         description: Unauthorized - Invalid or missing token
  */
-router.post('/items/', (req: any, res, next) => CartController.addItemToCart(req, res, next));
+router.post('/items/', requireRole('user'), (req: any, res, next) => CartController.addItemToCart(req, res, next));
 
 /**
  * @openapi
@@ -115,7 +116,7 @@ router.post('/items/', (req: any, res, next) => CartController.addItemToCart(req
  *       401:
  *         description: Unauthorized - Invalid or missing token
  */
-router.get('/items/:id', (req: any, res, next) => CartController.getCart(req, res, next));
+router.get('/items/:id', requireRole('user'), (req: any, res, next) => CartController.getCart(req, res, next));
 
 /**
  * @openapi
@@ -175,7 +176,7 @@ router.get('/items/:id', (req: any, res, next) => CartController.getCart(req, re
  *       401:
  *         description: Unauthorized - Invalid or missing token
  */
-router.put('/items/:productId', (req: any, res, next) => CartController.updateItemQuantity(req, res, next));
+router.put('/items/:productId', requireRole('user'), (req: any, res, next) => CartController.updateItemQuantity(req, res, next));
 
 /**
  * @openapi
@@ -220,7 +221,7 @@ router.put('/items/:productId', (req: any, res, next) => CartController.updateIt
  *       401:
  *         description: Unauthorized - Invalid or missing token
  */
-router.delete('/items/:productId', (req: any, res, next) => CartController.removeItemFromCart(req, res, next));
+router.delete('/items/:productId', requireRole('user'), (req: any, res, next) => CartController.removeItemFromCart(req, res, next));
 
 /**
  * @openapi
@@ -255,7 +256,7 @@ router.delete('/items/:productId', (req: any, res, next) => CartController.remov
  *       403:
  *         description: Forbidden - Insufficient permissions (requires admin role)
  */
-router.delete('/items/:id', (req: any, res, next) => CartController.clearCart(req, res, next));
+router.delete('/items/:id', requireRole('user'), (req: any, res, next) => CartController.clearCart(req, res, next));
 
 export default router;
 

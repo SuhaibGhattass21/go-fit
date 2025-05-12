@@ -1,6 +1,6 @@
-// src/routes/order_routes.ts
 import { Router } from "express";
 import { OrderController } from "../controllers/order.controller";
+import { requireRole } from "src/middlewares/role";
 
 const router = Router();
 
@@ -63,8 +63,8 @@ const router = Router();
  *         description: Bad request
  */
 
-router.get("/orders", OrderController.getOrders);
-router.post("/orders", OrderController.createOrder);
+router.get("/orders", requireRole('user'), OrderController.getOrders);
+router.post("/orders", requireRole('user'), OrderController.createOrder);
 
 
 /**
@@ -125,8 +125,10 @@ router.post("/orders", OrderController.createOrder);
  *       404:
  *         description: Order not found
  */
-router.get("/orders/:id", OrderController.getOrder);
-router.put("/orders/:id", OrderController.updateOrder);
-router.delete("/orders/:id", OrderController.deleteOrder);
+router.get("/orders/:id", requireRole('user'), OrderController.getOrder);
+router.put("/orders/:id", requireRole('user'), OrderController.updateOrder);
+router.delete("/orders/:id", requireRole('admin'), OrderController.deleteOrder);
+router.get('/all', requireRole('admin'), OrderController.getAllOrders);
+router.post('/:id/cancel', requireRole('user'), OrderController.cancelOrder);
 
 export default router;
