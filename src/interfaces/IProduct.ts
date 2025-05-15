@@ -1,6 +1,12 @@
 import { Document,Types } from "mongoose";
 import { ProductCategory } from "../types/categories";
 
+
+export interface IBundleItem {
+    product: Types.ObjectId;
+    quantity: number;
+}
+
 export interface IProduct extends Document {
     _id: Types.ObjectId;
     name: string;
@@ -9,6 +15,12 @@ export interface IProduct extends Document {
     category: ProductCategory;
     stock: number; 
     imageUrl?: string;
+    averageRating: number;
+    reviewsCount: number;
+    nutritionalInfo: Map<string, any>;
+    isBundle: boolean;
+    bundleProducts: IBundleItem[];
+
     createdAt: Date;
     updatedAt: Date;
 }
