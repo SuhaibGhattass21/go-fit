@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { Order } from "../models/order.model";
-import { Product } from "../models/product.model";
-import { IOrder, IOrderItem } from "../interfaces/IOrder";
-import { OrderStatus } from "../types/orderStatus";
+import { Order } from "../../infrastructure/database/models/order.model";
+import { Product } from "../../infrastructure/database/models/product.model";
+import { IOrder, IOrderItem } from "../../application/interfaces/IOrder";
+import { OrderStatus } from "../../domain/enums/orderStatus";
 
 export class OrderService {
 
