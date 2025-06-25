@@ -1,12 +1,12 @@
 import express from 'express';
 import passport from 'passport';
-import connectDB from './config/db';
-import env from './config/env'
-import Routes from './routes/index';
+import connectDB from './infrastructure/database/mongodb/db';
+import env from './interfaces/config/env'
+import Routes from './interfaces/http/routes';
 import './config/passport';
 import cors from 'cors';
-import { logger } from './utils/logger';
-import swaggerSpec from './config/swagger';
+import { logger } from './infrastructure/utils/logger';
+import swaggerSpec from './interfaces/config/swagger/swagger';
 import swaggerUI from 'swagger-ui-express';
 
 const app = express();
